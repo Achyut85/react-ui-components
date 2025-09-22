@@ -50,8 +50,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
   ...props
 }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
-
-
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   const isPassword = type === 'password' || showPasswordToggle;
   const actualType = isPassword ? (showPassword ? 'text' : 'password') : type;
