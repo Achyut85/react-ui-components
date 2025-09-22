@@ -1,69 +1,245 @@
-# React + TypeScript + Vite
+# 🎨 React Component Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Focus Area:** UI Components  
+**Tech Stack:** React · TypeScript · TailwindCSS · Storybook
 
-Currently, two official plugins are available:
+This project contains reusable React components with modern patterns, full TypeScript support, and comprehensive Storybook documentation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📦 Components
 
-## Expanding the ESLint configuration
+### 1. InputField
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+A flexible, fully typed input component with multiple states, sizes, and variants.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### Features
+- Text input with label, placeholder, helper text, and error message
+- **States:** disabled, invalid, loading
+- **Variants:** filled, outlined, ghost
+- **Sizes:** sm, md, lg
+- Clear button and password toggle functionality
+- Light & dark theme support
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Props Interface
+```typescript
+export interface InputFieldProps {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label?: string;
+  placeholder?: string;
+  helperText?: string;
+  errorMessage?: string;
+  disabled?: boolean;
+  invalid?: boolean;
+  loading?: boolean;
+  variant?: 'filled' | 'outlined' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  type?: string;
+  showClear?: boolean;
+  showPasswordToggle?: boolean;
+  theme?: 'light' | 'dark';
+  className?: string;
+  id?: string;
+  name?: string;
+  required?: boolean;
+  autoFocus?: boolean;
+  maxLength?: number;
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. DataTable
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+A fully typed, generic data table component with sorting, row selection, and loading states. Built with a modular architecture for maintainability and reusability.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Features
+- Display tabular data with type safety
+- Column sorting functionality
+- Row selection (single/multiple)
+- Loading state with skeleton UI
+- Empty state handling
+- Responsive design
+- Modular component architecture
+
+#### Component Architecture
+- **DataTable.tsx**: Main container component
+- **DataTableHeader.tsx**: Handles column headers and sorting logic
+- **DataTableRow.tsx**: Individual row component with selection
+- **DataTableBody.tsx**: Body container that maps and renders rows
+- **LoadingSpinner.tsx**: Reusable loading state component
+- **EmptyState.tsx**: Empty state with customizable messaging
+
+#### Props Interface
+```typescript
+interface DataTableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+  loading?: boolean;
+  selectable?: boolean;
+  onRowSelect?: (selectedRows: T[]) => void;
+}
+
+interface Column<T> {
+  key: string;
+  title: string;
+  dataIndex: keyof T;
+  sortable?: boolean;
+}
 ```
+
+## 📖 Storybook Integration
+
+### InputField Stories
+
+- **Default:** Standard input with label and placeholder
+- **Disabled:** Input in disabled state
+- **Invalid/Error:** Displays error message and invalid styling
+- **Loading:** Shows loading spinner
+- **Variants:** filled, outlined, ghost demonstrations
+- **Sizes:** sm, md, lg size comparisons
+- **Clear Button & Password Toggle:** Interactive optional controls
+- **Theme:** Light and Dark theme examples
+
+#### Storybook Controls
+| Control              | Type    | Description                                    |
+|----------------------|---------|------------------------------------------------|
+| `value`              | string  | Current input value                            |
+| `placeholder`        | string  | Input placeholder text                         |
+| `disabled`           | boolean | Toggle disabled state                          |
+| `invalid`            | boolean | Toggle invalid/error state                     |
+| `loading`            | boolean | Show/hide loading spinner                      |
+| `variant`            | select  | Switch between `filled`, `outlined`, `ghost`  |
+| `size`               | select  | Switch between `sm`, `md`, `lg`                |
+| `showClear`          | boolean | Enable/disable clear button                    |
+| `showPasswordToggle` | boolean | Enable/disable password toggle                 |
+| `theme`              | select  | Switch between `light` and `dark`              |
+
+### DataTable Stories
+
+- **Default:** Interactive DataTable with row selection and configurable data
+- **Loading:** Shows loading state with skeleton placeholders
+- **Empty:** Displays empty state when no data is provided
+- **LargeDataset:** Performance testing with 100+ rows
+- **NonSelectable:** Table without row selection capabilities
+
+#### Storybook Controls
+| Control      | Type    | Description                      |
+|--------------|---------|----------------------------------|
+| `data`       | object  | Editable array of data rows      |
+| `loading`    | boolean | Toggle loading state             |
+| `selectable` | boolean | Enable/disable row selection     |
+
+## ⚡ Setup Instructions
+
+### 1. Clone Repository
+```bash
+git clone <repo-url>
+cd react-component-library
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Run Storybook
+```bash
+npm run storybook
+# or
+yarn storybook
+```
+
+### 4. Run Project in Development
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## 🚀 Usage Examples
+
+### InputField
+```tsx
+import { InputField } from './components/InputField';
+
+function App() {
+  const [value, setValue] = useState('');
+  
+  return (
+    <InputField
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      label="Email Address"
+      placeholder="Enter your email"
+      variant="outlined"
+      size="md"
+    />
+  );
+}
+```
+
+### DataTable
+```tsx
+import { DataTable } from './components/DataTable';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const users: User[] = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' }
+];
+
+const columns = [
+  { key: 'name', title: 'Name', dataIndex: 'name', sortable: true },
+  { key: 'email', title: 'Email', dataIndex: 'email', sortable: true }
+];
+
+function App() {
+  return (
+    <DataTable<User>
+      data={users}
+      columns={columns}
+      selectable
+      onRowSelect={(rows) => console.log('Selected:', rows)}
+    />
+  );
+}
+```
+
+## 🛠 Development
+
+### Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run storybook` - Run Storybook
+- `npm run build-storybook` - Build Storybook for deployment
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript compiler
+
+### Project Structure
+```
+src/
+├── components/
+│   ├── InputField/
+│   │   ├── InputField.tsx
+│   │   ├── InputField.types.ts
+│   │   └── InputField.stories.tsx
+│   └── DataTable/
+│       ├── DataTable.tsx
+│       ├── DataTable.types.ts
+│       ├── DataTable.stories.tsx
+│       ├── DataTableHeader.tsx    # Table headers with sorting
+│       ├── DataTableRow.tsx       # Single table row
+│       ├── DataTableBody.tsx      # Table body (maps rows)
+│       ├── LoadingSpinner.tsx     # Loading state component
+│       └── EmptyState.tsx         # Empty state component
+└── styles/
+    └── globals.css
+```
+
+## 📄 License
+
+This project is licensed under the MIT License.
