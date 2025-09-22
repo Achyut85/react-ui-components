@@ -50,7 +50,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
   ...props
 }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+
 
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   const isPassword = type === 'password' || showPasswordToggle;
@@ -144,8 +144,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
           required={required}
           autoFocus={autoFocus}
           maxLength={maxLength}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+        
           className={`${getVariantClasses()} ${sizeClasses[size]} ${
             (showClear && hasValue) || showPasswordToggle || loading ? 'pr-10' : ''
           } ${
