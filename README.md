@@ -135,7 +135,6 @@ interface Column<T> {
 ### 1. Clone Repository
 ```bash
 git clone https://github.com/Achyut85/react-ui-components.git
-cd react-component-library
 ```
 
 ### 2. Install Dependencies
