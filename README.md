@@ -134,7 +134,7 @@ interface Column<T> {
 
 ### 1. Clone Repository
 ```bash
-git clone <repo-url>
+git clone https://github.com/Achyut85/react-ui-components.git
 cd react-component-library
 ```
 
